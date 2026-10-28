@@ -25,15 +25,15 @@ jobs:
         dotnet nuget add source https://bepinex.dev --name BepInEx
 
     - name: Steam Surumu Paketlerini Indir ve Derle
-      run: dotnet build -c Release
+      run: dotnet build ViShape/ViShape.csproj -c Release
 
     - name: DLL Dosyasini Hazırla
       run: |
         mkdir publish
-        if (Test-Path "bin\Release\net6.0\ViShape.dll") {
-          copy bin\Release\net6.0\ViShape.dll publish\
+        if (Test-Path "ViShape\bin\Release\net6.0\ViShape.dll") {
+          copy ViShape\bin\Release\net6.0\ViShape.dll publish\
         } else {
-          copy bin\Release\ViShape.dll publish\
+          copy ViShape\bin\Release\ViShape.dll publish\
         }
       shell: powershell
 
@@ -47,3 +47,4 @@ jobs:
         files: publish/ViShape.dll
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
