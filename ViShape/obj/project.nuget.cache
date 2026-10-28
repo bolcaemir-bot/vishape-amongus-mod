@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "dgSpecHash": "N+Mh2L+LDCU=",
+  "success": false,
+  "projectFilePath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\demon\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.36\\microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\demon\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.36\\microsoft.windowsdesktop.app.ref.6.0.36.nupkg.sha512",
+    "C:\\Users\\demon\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.36\\microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1301",
+      "level": "Error",
+      "message": "'https://reactor.gg/FindPackagesById()?id='Reactor'&semVerLevel=2.0.0' uzak kaynağından 'Reactor' hakkındaki bilgiler alınamadı.\r\n  Response status code does not indicate success: 404 (Not Found).",
+      "projectPath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "filePath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "targetGraphs": []
+    },
+    {
+      "code": "NU1301",
+      "level": "Error",
+      "message": "'https://reactor.gg/FindPackagesById()?id='AmongUs.GameLibs.Steam'&semVerLevel=2.0.0' uzak kaynağından 'AmongUs.GameLibs.Steam' hakkındaki bilgiler alınamadı.\r\n  Response status code does not indicate success: 404 (Not Found).",
+      "projectPath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "filePath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "targetGraphs": []
+    },
+    {
+      "code": "NU1301",
+      "level": "Error",
+      "message": "'https://reactor.gg/FindPackagesById()?id='BepInEx.AutoPlugin'&semVerLevel=2.0.0' uzak kaynağından 'BepInEx.AutoPlugin' hakkındaki bilgiler alınamadı.\r\n  Response status code does not indicate success: 404 (Not Found).",
+      "projectPath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "filePath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "targetGraphs": []
+    },
+    {
+      "code": "NU1301",
+      "level": "Error",
+      "message": "'https://reactor.gg/FindPackagesById()?id='BepInEx.Unity.IL2CPP'&semVerLevel=2.0.0' uzak kaynağından 'BepInEx.Unity.IL2CPP' hakkındaki bilgiler alınamadı.\r\n  Response status code does not indicate success: 404 (Not Found).",
+      "projectPath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "filePath": "C:\\Users\\demon\\OneDrive\\Masaüstü\\ViShape\\ViShape.csproj",
+      "targetGraphs": []
+    }
+  ]
+}
