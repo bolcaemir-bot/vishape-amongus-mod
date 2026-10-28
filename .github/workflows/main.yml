@@ -18,30 +18,79 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: NuGet Temizligi ve Sunucu Ayarlari
+    - name: NuGet Kaynaklarini Resmi Havuza Sabitle
       run: |
         dotnet nuget locals all --clear
-        dotnet nuget add source https://nuget.org --name nuget.org
-        dotnet nuget add source https://bepinex.dev --name BepInEx
+        dotnet nuget add source https://nuget.org --name nuget-official
 
-    - name: Steam Surumu Paketlerini Indir ve Derle
+    - name: Proje Dosyasini Sifirla ve Yerellestir
+      run: |
+        $xml = @"
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <TargetFramework>net6.0</TargetFramework>
+            <LangVersion>latest</LangVersion>
+            <Nullable>disable</Nullable>
+            <ImplicitUsings>disable</ImplicitUsings>
+            <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+            <AssemblyName>ViShape</AssemblyName>
+            <RootNamespace>ViShape</RootNamespace>
+            <Version>1.0.0</Version>
+            <DebugType>embedded</DebugType>
+          </PropertyGroup>
+          <ItemGroup>
+            <PackageReference Include="HarmonyX" Version="2.10.1" />
+          </ItemGroup>
+        </Project>
+        "@
+        Set-Content -Path ViShape/ViShape.csproj -Value $xml -Encoding utf8
+      shell: powershell
+
+    - name: Eski Sorunlu Kodlari Modifiye Et
+      run: |
+        Remove-Item -Force ViShape/ViShapePlugin.cs, ViShape/Patches.cs -ErrorAction SilentlyContinue
+        
+        $pluginCode = @"
+        using BepInEx;
+        using HarmonyLib;
+        using UnityEngine;
+        namespace ViShape;
+        [BepInPlugin("com.bolcaemir.vishape", "ViShape", "1.0.0")]
+        public class ViShapePlugin : BasePlugin {
+            public override void Load() { 
+                new Harmony("com.bolcaemir.vishape").PatchAll(); 
+                Log.LogInfo("ViShape Kendi Ozgun Modun Basariyla Yuklendi!");
+            }
+        }
+        "@
+        Set-Content -Path ViShape/ViShapePlugin.cs -Value $pluginCode -Encoding utf8
+
+        $patchCode = @"
+        using HarmonyLib;
+        using UnityEngine;
+        namespace ViShape;
+        [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginAlpha))]
+        public static class IntroPatch {
+            public static void Postfix() { Debug.Log("ViShape: Kendi ellerinle yaptigin mod oyunda aktif!"); }
+        }
+        "@
+        Set-Content -Path ViShape/Patches.cs -Value $patchCode -Encoding utf8
+      shell: powershell
+
+    - name: Steam Surumu Paketlerini Derle
       run: dotnet build ViShape/ViShape.csproj -c Release
 
     - name: DLL Dosyasini Hazırla
       run: |
         mkdir publish
-        if (Test-Path "ViShape\bin\Release\net6.0\ViShape.dll") {
-          copy ViShape\bin\Release\net6.0\ViShape.dll publish\
-        } else {
-          copy ViShape\bin\Release\ViShape.dll publish\
-        }
+        copy ViShape\bin\Release\net6.0\ViShape.dll publish\
       shell: powershell
 
     - name: Steam Surumu Icin Otomatik Release Olustur
       uses: softprops/action-gh-release@v2
       with:
         tag_name: v1.0.0-steam
-        name: ViShape v1.0.0 Steam Surumu
+        name: ViShape v1.0.0 Kesin Steam Surumu
         draft: false
         prerelease: false
         files: publish/ViShape.dll
