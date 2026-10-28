@@ -1,0 +1,49 @@
+name: ViShape Steam Surumu Derleme Motoru
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Kodlari Depodan Cek
+      uses: actions/checkout@v4
+
+    - name: .NET 6.0 Kurulumu (Among Us Standarti)
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 6.0.x
+
+    - name: NuGet Temizligi ve Sunucu Ayarlari
+      run: |
+        dotnet nuget locals all --clear
+        dotnet nuget add source https://nuget.org --name nuget.org
+        dotnet nuget add source https://bepinex.dev --name BepInEx
+
+    - name: Steam Surumu Paketlerini Indir ve Derle
+      run: dotnet build -c Release
+
+    - name: DLL Dosyasini Hazırla
+      run: |
+        mkdir publish
+        if (Test-Path "bin\Release\net6.0\ViShape.dll") {
+          copy bin\Release\net6.0\ViShape.dll publish\
+        } else {
+          copy bin\Release\ViShape.dll publish\
+        }
+      shell: powershell
+
+    - name: Steam Surumu Icin Otomatik Release Olustur
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.0.0-steam
+        name: ViShape v1.0.0 Steam Surumu
+        draft: false
+        prerelease: false
+        files: publish/ViShape.dll
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
